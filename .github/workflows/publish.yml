@@ -1,0 +1,64 @@
+name: Publish
+on:
+  workflow_dispatch:
+    inputs:
+      release_tag:
+        description: Existing reviewed tag, for example v0.2.0
+        required: true
+        type: string
+      dist_tag:
+        description: npm distribution tag
+        required: true
+        type: choice
+        options: [latest, next]
+        default: latest
+permissions:
+  contents: read
+concurrency:
+  group: npm-publish
+  cancel-in-progress: false
+jobs:
+  publish:
+    if: github.repository == 'Arkah-io/agent-guardrails'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          ref: refs/tags/${{ inputs.release_tag }}
+          persist-credentials: false
+      - uses: pnpm/action-setup@b906affcce14559ad1aafd4ab0e942779e9f58b1 # v4
+        with:
+          version: 9.1.0
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+      - name: Verify release identity
+        env:
+          RELEASE_TAG: ${{ inputs.release_tag }}
+          REPOSITORY: ${{ github.repository }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          if (process.env.RELEASE_TAG !== 'v' + p.version) throw new Error('Release tag must match package version.');
+          if (p.repository.url !== 'git+https://github.com/' + process.env.REPOSITORY + '.git') throw new Error('Package repository must match this workflow.');
+          JS
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm verify
+      - run: pnpm smoke:package
+      - run: pnpm pack
+      - name: Publish using npm trusted publishing
+        env:
+          DIST_TAG: ${{ inputs.dist_tag }}
+        run: |
+          node --input-type=module <<'JS'
+          import fs from 'node:fs';
+          import { execFileSync } from 'node:child_process';
+          const p = JSON.parse(fs.readFileSync('package.json', 'utf8'));
+          const tarball = p.name.replace(/^@/, '').replace('/', '-') + '-' + p.version + '.tgz';
+          execFileSync('npm', ['publish', tarball, '--access', 'public', '--tag', process.env.DIST_TAG], { stdio: 'inherit' });
+          JS

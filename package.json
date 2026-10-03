@@ -1,0 +1,82 @@
+{
+  "name": "arkah-agent-guardrails",
+  "version": "0.1.0",
+  "description": "Document mutation, read-before-write and admission policies for LangChain agents built on LangGraph.",
+  "type": "module",
+  "license": "MIT",
+  "author": "Arkah (https://arkah.io)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Arkah-io/agent-guardrails.git"
+  },
+  "homepage": "https://github.com/Arkah-io/agent-guardrails#readme",
+  "bugs": "https://github.com/Arkah-io/agent-guardrails/issues",
+  "engines": {
+    "node": ">=20"
+  },
+  "packageManager": "pnpm@9.1.0",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "sideEffects": false,
+  "files": [
+    "dist",
+    "src",
+    "examples",
+    "docs",
+    "CONTRIBUTING.md",
+    "README.md",
+    "LICENSE",
+    "SECURITY.md",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.build.json",
+    "check": "tsc --noEmit",
+    "lint": "prettier --check .",
+    "format": "prettier --write .",
+    "test": "tsx --test tests/*.test.ts",
+    "demo": "tsx examples/document-agent.ts",
+    "verify": "pnpm lint && pnpm check && pnpm test && pnpm build && pnpm demo && node --input-type=module -e \"import('arkah-agent-guardrails').then(m => { if (!m.createDocumentGuardrails) process.exit(1) })\"",
+    "prepack": "pnpm build",
+    "smoke:package": "node scripts/package-smoke.mjs",
+    "prepublishOnly": "pnpm verify && pnpm smoke:package"
+  },
+  "peerDependencies": {
+    "@langchain/core": "^1.2.14",
+    "@langchain/langgraph": "^1.4.18",
+    "langchain": "^1.5.15",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@langchain/core": "1.2.14",
+    "@langchain/langgraph": "1.4.18",
+    "@types/node": "^22.0.0",
+    "langchain": "1.5.15",
+    "prettier": "^3.6.2",
+    "tsx": "^4.20.5",
+    "typescript": "^5.9.2",
+    "zod": "4.6.5"
+  },
+  "keywords": [
+    "langchain",
+    "langgraph",
+    "middleware",
+    "agents",
+    "guardrails",
+    "ai-agents",
+    "tool-calling",
+    "idempotency",
+    "llm"
+  ],
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}
