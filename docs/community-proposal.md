@@ -6,7 +6,7 @@ A standalone JavaScript integration and technical walkthrough: **One user turn, 
 
 LangChain's existing call-limit and retry middleware are useful primitives. Document editing adds a relationship those primitives do not express alone: one accepted user input, a successful earlier document read, one atomic mutation identity, and a result that may need replay after a transport retry.
 
-The proposal is to share those generic policies and a small no-key example. No Arkah document-generation, critique, prompt, model-routing, production schema, or application service code is included.
+The proposal is to share those policies with a runnable example that needs no API key.
 
 ## Reviewable behavior
 

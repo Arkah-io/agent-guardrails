@@ -26,11 +26,3 @@ Push a reviewed Git tag that exactly matches `v` plus the package version. Run t
 Enable [private vulnerability reporting](https://docs.github.com/en/code-security/how-tos/report-and-fix-vulnerabilities/configure-vulnerability-reporting/configure-for-a-repository) before announcing the repository. Verify that `SECURITY.md` leads to the private report form. The markdown file does not enable the setting itself.
 
 Maintain the required CI checks, review dependency-update pull requests, and subscribe a maintainer to security alerts. Keep unsupported guarantees out of the README and examples.
-
-## Impact to User
-
-- **What changed for users:** Releases are validated as installable packages and tied to source versions.
-- **UX impact (positive/negative):** Broken imports and inconsistent metadata are caught before publication; authentication and CI failures stop a release.
-- **Who is affected:** Maintainers and developers installing the package.
-- **Risks/edge-cases for user experience:** Registry publication is permanent for normal versioning purposes; trusted-publisher setup must match the exact repository and workflow.
-- **How to verify from a user perspective:** Install the published version in a fresh project and run its demo or public API smoke.

@@ -190,18 +190,10 @@ pnpm smoke:package
 
 The tests exercise real `createAgent` calls and LangGraph checkpoints, concurrent mutation claims, same-call replay, changed arguments, forged read history, failed reads, authorization, pending writes after storage failure, moderation binding, retry ownership, and cancellation. The package smoke test installs a fresh tarball, type-checks its public declarations, and runs the real agent demo against the installed package.
 
-The [community contribution draft](docs/community-proposal.md) describes a possible LangChain integration and the review questions that still need maintainer input. The generic policies and synthetic document demo are the complete scope of this project. Arkah's generation and critique implementation is not included.
+The [community contribution draft](docs/community-proposal.md) describes a possible LangChain integration and the review questions that still need maintainer input.
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) and [SECURITY.md](SECURITY.md). Licensed under [MIT](LICENSE).
 
 ## Background
 
-These policies come from [Arkah](https://arkah.io), an AI workspace where agents edit visual boards. A board edit there is a canvas mutation that has to be undoable, so a duplicated or blind edit costs more than a refused tool call. This package is the generic version of those rules. It contains no Arkah product code.
-
-## Impact to User
-
-- **What changed for users:** Document-editing agents can enforce one authorized mutation after a successful read and reuse accepted admission decisions.
-- **UX impact (positive/negative):** Duplicate and premature writes are refused; ambiguous writes require recovery by the host.
-- **Who is affected:** Developers building document-editing agents with LangChain and LangGraph.
-- **Risks/edge-cases for user experience:** Production hosts must implement durable storage, revision checks, and reconciliation after uncertain outcomes.
-- **How to verify from a user perspective:** Run `pnpm verify` and `pnpm smoke:package`; the demo records one write and one moderation call after replay.
+Originally developed at [Arkah](https://arkah.io) for agents that edit documents.
