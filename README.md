@@ -8,7 +8,7 @@ These failures have a common feature: the application needs a rule that survives
 
 `arkah-agent-guardrails` is a small TypeScript middleware pack for **LangChain `createAgent`, built on LangGraph**. It binds one trusted logical user turn to a document scope and enforces the contracts around reads, writes, retries, and accepted moderation decisions. It comes with a working offline agent demo and a storage interface for durable deployments.
 
-**Status:** v0.1.0 preview, independently maintained. ESM only. CI is configured for Node 20, 22 and 24 against the lockfile floor below, with a separate weekly job for newer compatible peer releases. This is not an official LangChain integration.
+**Status:** v0.1.1 preview, independently maintained. ESM only. CI is configured for Node 20, 22 and 24 against the lockfile floor below, with a separate weekly job for newer compatible peer releases. This is not an official LangChain integration.
 
 | Peer                   | Tested floor | Accepted range |
 | ---------------------- | ------------ | -------------- |

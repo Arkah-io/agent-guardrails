@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.1 — 2026-10-03
+
+- Simplify public documentation, contributor guidance, and the pull request template.
+- Remove internal project conventions and implementation references from public docs.
+
 ## 0.1.0 — 2026-10-03
 
 - `createDocumentGuardrails` middleware for LangChain `createAgent`: read-before-write, read-batch deferral, one mutation per logical turn, exact replay, unknown-outcome closure, and per-call authorization.

@@ -1,6 +1,6 @@
 {
   "name": "arkah-agent-guardrails",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Document mutation, read-before-write and admission policies for LangChain agents built on LangGraph.",
   "type": "module",
   "license": "MIT",
