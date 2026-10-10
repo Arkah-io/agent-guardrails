@@ -55,8 +55,8 @@
     "zod": "^4.6.5"
   },
   "devDependencies": {
-    "@langchain/core": "1.2.14",
-    "@langchain/langgraph": "1.4.18",
+    "@langchain/core": "1.2.17",
+    "@langchain/langgraph": "1.4.21",
     "@types/node": "^22.0.0",
     "langchain": "1.5.15",
     "prettier": "^3.6.2",
